@@ -1,5 +1,5 @@
 html{
-    font-size: 30px;
+    /* font-size: 21px; */
     font-family: 'Inconsolata', monospace;
 }
 
@@ -10,30 +10,29 @@ body{
     margin: 0 auto;
 }
 
-
 p{
-    text-align: left;
-    font-size: 21px;
-    padding: 0px 0px 0px 0px;
+    font-size: 23px;
     margin: 0px auto;
-    line-height: 35px;
+    line-height: 30px;
     text-transform: capitalize;
 }
 
-h1{
+#title{
     text-align: center;
     letter-spacing: 10px;
-    font-size: 45px;
+    font-size: 3.5em;
     background-color: #2052a8bd;
     margin: 5% auto;
+    position: sticky;
 }
 
-h1:hover{
+#title:hover{
     background-color: #2052a8;;
 }
 
 h5{
     border-left: 4px solid #2052a8;
+    font-size: 1.75em;
     padding-left: 4px;
     margin: 32px 0px 8px 12px;
     text-decoration: underline;
@@ -46,7 +45,8 @@ h5:hover{
 
 .univ{
     text-decoration: underline;
-    margin-left: 5%;
+    font-size: 1.5em;
+    margin: 14px 0 7px 5%;
 }
 
 #address{
@@ -56,8 +56,17 @@ h5:hover{
     margin: 0px auto;
 }
 
-#Ending{
+.ending{
     margin: 5% auto;
+}
+
+.media{
+    margin: 10px auto;
+}
+
+.ow{
+    display: flex;
+    margin: 10px auto;
 }
 
 audio{
