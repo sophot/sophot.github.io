@@ -1,0 +1,66 @@
+html{
+    font-size: 30px;
+    font-family: 'Inconsolata', monospace;
+}
+
+body{
+    background-color: rgb(33, 33, 33);
+    color: #fbffed94;
+    width: 65%;
+    margin: 0 auto;
+}
+
+
+p{
+    text-align: left;
+    font-size: 21px;
+    padding: 0px 0px 0px 0px;
+    margin: 0px auto;
+    line-height: 35px;
+    text-transform: capitalize;
+}
+
+h1{
+    text-align: center;
+    letter-spacing: 10px;
+    font-size: 45px;
+    background-color: #2052a8bd;
+    margin: 5% auto;
+}
+
+h1:hover{
+    background-color: #2052a8;;
+}
+
+h5{
+    border-left: 4px solid #2052a8;
+    padding-left: 4px;
+    margin: 32px 0px 8px 12px;
+    text-decoration: underline;
+    text-transform: uppercase;
+}
+
+h5:hover{
+    color: white;
+}
+
+.univ{
+    text-decoration: underline;
+    margin-left: 5%;
+}
+
+#address{
+    font-size: 16px;
+    text-align: center;
+    letter-spacing: 5px;
+    margin: 0px auto;
+}
+
+#Ending{
+    margin: 5% auto;
+}
+
+audio{
+    height: 25px;
+    width: 85%;
+}
