@@ -1,75 +1,76 @@
-html{
-    /* font-size: 21px; */
-    font-family: 'Inconsolata', monospace;
+html {
+  /* font-size: 21px; */
+  font-family: "Inconsolata", monospace;
 }
 
-body{
-    background-color: rgb(33, 33, 33);
-    color: #fbffed94;
-    width: 65%;
-    margin: 0 auto;
+body {
+  background-color: rgb(33, 33, 33);
+  color: #fbffed94;
+  width: 65%;
+  margin: 0 auto;
 }
 
-p{
-    font-size: 23px;
-    margin: 0px auto;
-    line-height: 30px;
-    text-transform: capitalize;
+p {
+  font-size: 23px;
+  margin: 0px auto;
+  line-height: 30px;
+  text-transform: capitalize;
 }
 
-#title{
-    text-align: center;
-    letter-spacing: 10px;
-    font-size: 3.5em;
-    background-color: #2052a8bd;
-    margin: 5% auto;
-    position: sticky;
+#title {
+  text-align: center;
+  letter-spacing: 10px;
+  font-size: 3.5em;
+  background-color: #2052a8bd;
+  margin: 5% auto;
+  position: sticky;
 }
 
-#title:hover{
-    background-color: #2052a8;;
+#title:hover {
+  background-color: #2052a8;
 }
 
-h5{
-    border-left: 4px solid #2052a8;
-    font-size: 1.75em;
-    padding-left: 4px;
-    margin: 32px 0px 8px 12px;
-    text-decoration: underline;
-    text-transform: uppercase;
+h5 {
+  border-left: 4px solid #2052a8;
+  font-size: 1.75em;
+  padding-left: 4px;
+  margin: 32px 0px 8px 12px;
+  text-decoration: underline;
+  text-transform: uppercase;
 }
 
-h5:hover{
-    color: white;
+h5:hover {
+  color: white;
 }
 
-.univ{
-    text-decoration: underline;
-    font-size: 1.5em;
-    margin: 14px 0 7px 5%;
+.univ {
+  text-decoration: underline;
+  font-size: 1.5em;
+  margin: 14px 0 7px 5%;
 }
 
-#address{
-    font-size: 16px;
-    text-align: center;
-    letter-spacing: 5px;
-    margin: 0px auto;
+#address {
+  font-size: 16px;
+  text-align: center;
+  letter-spacing: 5px;
+  margin: 0px auto;
 }
 
-.ending{
-    margin: 5% auto;
+.ending {
+  margin: 5% auto;
 }
 
-.media{
-    margin: 10px auto;
+.media {
+  margin: 10px auto;
 }
 
-.ow{
-    display: flex;
-    margin: 10px auto;
+.ow {
+  display: flex;
+  justify-content: center;
+  margin: 10px auto;
 }
 
-audio{
-    height: 25px;
-    width: 85%;
+audio {
+  height: 25px;
+  width: 85%;
 }
