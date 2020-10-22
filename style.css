@@ -6,7 +6,7 @@ html {
 body {
   background-color: rgb(33, 33, 33);
   color: #fbffed94;
-  width: 65%;
+  width: 70%;
   margin: 0 auto;
 }
 
@@ -57,7 +57,7 @@ h5:hover {
 }
 
 .ending {
-  margin: 5% auto;
+  margin: 3%, 0px, 10%, 0px;
 }
 
 .media {
@@ -66,8 +66,15 @@ h5:hover {
 
 .ow {
   display: flex;
-  justify-content: center;
   margin: 10px auto;
+}
+
+.game {
+  display: inline;
+  float: left;
+  margin-right: 1%;
+  margin-bottom: 5%;
+  margin-top: 1%;
 }
 
 audio {
