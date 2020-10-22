@@ -70,4 +70,17 @@
 				<p>Hello</p>
 			</div> -->
 	</body>
+
+<!-- Load the Twitch embed script -->
+<script src="https://player.twitch.tv/js/embed/v1.js"></script>
+
+<!-- Create a Twitch.Player object. This will render within the placeholder div -->
+<script type="text/javascript">
+  new Twitch.Player("twitch-embed", {
+    video: "328932970",
+	width: 720,
+	height: 480,
+	allowfullscreen: true,
+  });
+</script>
 </html>
