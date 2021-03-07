@@ -5,7 +5,7 @@ html {
 
 body {
   background-color: rgb(33, 33, 33);
-  color: #fbffed94;
+  color: #888888;
   width: 70%;
   margin: 0 auto;
 }
@@ -17,17 +17,49 @@ p {
   text-transform: capitalize;
 }
 
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+li {
+  width: 50%;
+  margin: 10px auto;
+  text-align: center;
+}
+
+li a {
+  display: block;
+  font-size: 1.3em;
+  letter-spacing: 3px;
+  color: #888888;
+  text-decoration: none;
+  width: 100%;
+}
+
+li a:hover {
+  background-color: #121212;
+  color: white;
+}
+
+.seperator {
+  border-left: 3px solid #888888;
+}
+
 #title {
   text-align: center;
   letter-spacing: 10px;
   font-size: 3.5em;
-  background-color: #2052a8bd;
-  margin: 5% auto;
+  background-color: #121212;
+  margin: 2% auto;
   position: sticky;
 }
 
 #title:hover {
-  background-color: #2052a8;
+  background-color: #888888;
+  color: #121212;
 }
 
 h5 {
