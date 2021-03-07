@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sorting Visualization</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/button.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/components/icon.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.0.0/lib/p5.min.js"></script>
+  </head>
+  <body>
+    <h1 class="jumbotron display-4">
+      Sorting Visualization :3
+      <blockquote class="blockquote">
+        <footer class="blockquote-footer">by <cite>kay._.phot</cite></footer>
+      </blockquote>
+    </h1>
+    <div class="ui grid container">
+      <div class="row">
+        <div class="col">
+          <h3>Bubble Sort O(n<sup>2</sup>)</h3>
+          <div id="bubble-sort"></div>
+          <!-- <button id="bubbleBtn">Reset Bubble Sort</button> -->
+          <button class="ui icon secondary button" id="bubbleBtn">
+            <i class="play icon"></i>
+            Replay Bubble Sort
+          </button>
+        </div>
+        <div class="col">
+          <h3>Selection Sort O(n<sup>2</sup>)</h3>
+          <div id="selection-sort"></div>
+          <button class="ui icon secondary button" id="selectionBtn">
+            <i class="play icon"></i>
+            Replay Selection Sort
+          </button>
+        </div>
+      </div>
+      <hr />
+      <div class="row">
+        <div class="col">
+          <h3>Insertion Sort O(n<sup>2</sup>)</h3>
+          <div id="insertion-sort"></div>
+          <button class="ui icon secondary button" id="insertionBtn">
+            <i class="play icon"></i>
+            Replay Insertion Sort
+          </button>
+        </div>
+        <div class="col">
+          <h3>Quick Sort O(nlgn)</h3>
+          <div id="quick-sort"></div>
+          <button class="ui icon secondary button" id="quickBtn">
+            <i class="play icon"></i>
+            Replay Quick Sort
+          </button>
+        </div>
+      </div>
+      <br />
+      <a
+        title="Facebook"
+        href="https://www.facebook.com/ksophot"
+        class="ui labeled icon button"
+        target="_blank"
+      >
+        <i class="facebook icon"></i>
+        Phot
+      </a>
+      <a
+        title="Github"
+        href="https://github.com/sophot"
+        class="ui labeled icon button"
+        target="_blank"
+      >
+        <i class="github icon"></i>
+        ksophot
+      </a>
+      <a
+        title="Linkedin"
+        href="https://www.linkedin.com/in/sophot-ky-3a7b6a117/"
+        class="ui labeled icon button"
+        target="_blank"
+      >
+        <i class="linkedin icon"></i>
+        Sophot Ky
+      </a>
+    </div>
+    <script src="sortAlgo/bubble.js"></script>
+    <script src="sortAlgo/selection.js"></script>
+    <script src="sortAlgo/insertion.js"></script>
+    <script src="sortAlgo/quicksort.js"></script>
+    <script src="sortAlgo/mainSketch.js"></script>
+  </body>
+</html>
