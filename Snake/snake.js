@@ -184,7 +184,7 @@ function isEaten(){
         food.eaten();
         score += 100;
         if(score % 1000 == 0){
-            SPEED++;
+            SPEED+=2;
         }
         // Snake grows: add snake tail
         let newBody;
