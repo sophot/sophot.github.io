@@ -6,6 +6,7 @@ let bubbleSort = function (s) {
 
   s.setup = function () {
     s.createCanvas(displayWidth, displayHeight);
+    s.frameRate(fps);
     for (let i = 0; i < displayWidth / RECT_WIDTH; i++) {
       s.randHeight = s.floor(Math.random() * displayHeight);
       s.value.push(s.randHeight);

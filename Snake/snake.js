@@ -4,7 +4,7 @@ const SNAKE_SIZE = 30;
 const START_POSX = WIDTH / 2;
 const START_POSY = HEIGHT /2;
 const STEP = 30;
-const SPEED = 5;
+let SPEED = 5;
 
 const SPACE = 32;
 
@@ -183,6 +183,9 @@ function isEaten(){
         // eaten
         food.eaten();
         score += 100;
+        if(score % 1000 == 0){
+            SPEED+=2;
+        }
         // Snake grows: add snake tail
         let newBody;
         switch (tail.direction){

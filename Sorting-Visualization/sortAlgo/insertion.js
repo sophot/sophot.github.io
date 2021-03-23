@@ -6,6 +6,7 @@ let insertionSort = function (s) {
 
   s.setup = function () {
     s.createCanvas(displayWidth, displayHeight);
+    s.frameRate(fps);
     for (let i = 0; i < displayWidth / RECT_WIDTH; i++) {
       s.randHeight = Math.floor(Math.random() * displayHeight);
       s.value.push(s.randHeight);

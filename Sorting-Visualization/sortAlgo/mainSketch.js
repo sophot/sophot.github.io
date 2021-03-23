@@ -2,6 +2,7 @@ let displayWidth = document.querySelector(".col").offsetWidth;
 let displayHeight = 200;
 let RECT_WIDTH = 5;
 let COLOR = 222;
+const fps = 20;
 let q;
 
 let bubble = new p5(bubbleSort, "bubble-sort");
