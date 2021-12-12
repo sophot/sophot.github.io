@@ -1,9 +1,9 @@
-let WIDTH = 960;
-let HEIGHT = 600;
-const SNAKE_SIZE = 30;
+let WIDTH = 500;
+let HEIGHT = 300;
+const SNAKE_SIZE = 20;
 const START_POSX = WIDTH / 2;
-const START_POSY = HEIGHT /2;
-const STEP = 30;
+const START_POSY = HEIGHT / 2;
+const STEP = 20;
 let SPEED = 5;
 
 const SPACE = 32;
@@ -23,36 +23,36 @@ let food;
 let score = 0;
 
 class Food {
-    constructor(posX, posY){
+    constructor(posX, posY) {
         this.posX = posX;
         this.posY = posY;
     }
 
-    draw(){
+    draw() {
         let c = color('red');
         fill(c);
         noStroke();
         square(this.posX, this.posY, SNAKE_SIZE);
     }
 
-    eaten(){
+    eaten() {
         let flag = false;
-        do{
-            this.posX = random(0, WIDTH - 30);
-            this.posY = random(0, HEIGHT - 30);
+        do {
+            this.posX = random(0, WIDTH - SNAKE_SIZE);
+            this.posY = random(0, HEIGHT - SNAKE_SIZE);
             flag = isSpaceAvailable(this);
         } while (flag == false)
     }
 }
 
 class Snake {
-    constructor(posX, posY){
+    constructor(posX, posY) {
         this.posX = posX;
         this.posY = posY;
         this.direction = "down";
     }
 
-    draw(x, y){
+    draw(x, y) {
         this.posX += x;
         this.posY += y;
         let c = color('white');
@@ -61,34 +61,34 @@ class Snake {
         square(this.posX, this.posY, SNAKE_SIZE);
 
         // check border
-        if(this.posX >= WIDTH){
+        if (this.posX >= WIDTH) {
             this.posX = 0;
         }
-        if (this.posX < 0){
+        if (this.posX < 0) {
             this.posX = WIDTH;
         }
-        if(this.posY >= HEIGHT){
+        if (this.posY >= HEIGHT) {
             this.posY = 0;
         }
-        if(this.posY < 0){
+        if (this.posY < 0) {
             this.posY = HEIGHT;
         }
     }
 
-    move_up(){
+    move_up() {
         this.direction = "up";
     }
-    move_down(){
+    move_down() {
         this.direction = "down";
     }
-    move_left(){
+    move_left() {
         this.direction = "left";
     }
-    move_right(){
+    move_right() {
         this.direction = "right";
     }
-    move(){
-        switch(this.direction){
+    move() {
+        switch (this.direction) {
             case "up":
                 this.draw(0, -STEP);
                 break;
@@ -111,7 +111,7 @@ function setup() {
     frameRate(SPEED);
     head = new Snake(START_POSX, START_POSY);
     tail = head;
-    food = new Food(random(0, WIDTH - 30), random(30, HEIGHT - 30));
+    food = new Food(random(0, WIDTH - SNAKE_SIZE), random(SNAKE_SIZE, HEIGHT - SNAKE_SIZE));
     append(snake, head);
     noLoop();
 }
@@ -122,84 +122,84 @@ function draw() {
     textAlign(CENTER);
     textSize(20);
     text('SCORE: ' + score, 100, 20);
-    food.draw();    
+    food.draw();
     isEaten();      // is food eaten by the snake?
 }
 
 function keyPressed() {
-  if (keyCode === LEFT_ARROW) {
-    head.move_left();
-  } else if (keyCode === RIGHT_ARROW) {
-    head.move_right();
-  }
-  else if (keyCode === UP_ARROW) {
-    head.move_up();
-  }
-  else if (keyCode === DOWN_ARROW) {
-    head.move_down();
-  } else if (keyCode === SPACE) {
-      // toogle space key to pause/play
-        if(isLooping()){
+    if (keyCode === LEFT_ARROW) {
+        head.move_left();
+    } else if (keyCode === RIGHT_ARROW) {
+        head.move_right();
+    }
+    else if (keyCode === UP_ARROW) {
+        head.move_up();
+    }
+    else if (keyCode === DOWN_ARROW) {
+        head.move_down();
+    } else if (keyCode === SPACE) {
+        // toogle space key to pause/play
+        if (isLooping()) {
             noLoop();
         } else {
             loop();
         }
-  }
+    }
 }
 
 function updateSnakeDirection() {
     let currentDirection = head.direction;
-    for(let i = 1; i < snake.length; i++) {
+    for (let i = 1; i < snake.length; i++) {
         let tmp = snake[i].direction;
         snake[i].direction = currentDirection
         currentDirection = tmp;
     }
 }
 
-function moveSnake(){
+function moveSnake() {
     snake.forEach(s => {
         s.move();
-        if (s != head && isCollided(head, s)){
+        if (s != head && isCollided(head, s)) {
             textAlign(CENTER);
-            text('YOU HAVE DIED!\n PRESS SPACE TO RESTART', 500, 500);
+            text('YOU HAVE DIED!\n PRESS SPACE TO RESTART', 400, 400);
             restart();
         }
     })
     updateSnakeDirection();
 }
 
-function restart(){
+function restart() {
     noLoop();
     snake = [];
     head = new Snake(START_POSX, START_POSY);
     tail = head;
-    food = new Food(random(0, WIDTH - 30), random(30, HEIGHT - 30));
+    food = new Food(random(0, WIDTH - SNAKE_SIZE), random(SNAKE_SIZE, HEIGHT - SNAKE_SIZE));
     append(snake, head);
     score = 0;
 }
 
-function isEaten(){
-    if(isCollided(head, food)){
+function isEaten() {
+    if (isCollided(head, food)) {
         // eaten
         food.eaten();
         score += 100;
-        if(score % 1000 == 0){
-            SPEED+=2;
+        if (score % 1000 == 0) {
+            SPEED += 2;
         }
         // Snake grows: add snake tail
         let newBody;
-        switch (tail.direction){
+        switch (tail.direction) {
             case "up":
-                newBody = new Snake(tail.posX, tail.posY + 30);
+                newBody = new Snake(tail.posX, tail.posY + SNAKE_SIZE);
                 break;
             case "down":
-                newBody = new Snake(tail.posX, tail.posY - 30);
+                newBody = new Snake(tail.posX, tail.posY - SNAKE_SIZE);
                 break;
             case "left":
-                newBody = new Snake(tail.posX + 30, tail.posY);
+                newBody = new Snake(tail.posX + SNAKE_SIZE, tail.posY);
                 break;
             case "right":
-                newBody = new Snake(tail.posX - 30, tail.posY);
+                newBody = new Snake(tail.posX - SNAKE_SIZE, tail.posY);
                 break;
         }
 
@@ -209,16 +209,16 @@ function isEaten(){
     }
 }
 
-function isCollided (obj1, obj2) {
-    if((obj1.posX + 30 > obj2.posX) && (obj1.posX < obj2.posX + 30)){
-        if( (obj1.posY + 30 > obj2.posY) && (obj1.posY < obj2.posY + 30)){
+function isCollided(obj1, obj2) {
+    if ((obj1.posX + SNAKE_SIZE > obj2.posX) && (obj1.posX < obj2.posX + SNAKE_SIZE)) {
+        if ((obj1.posY + SNAKE_SIZE > obj2.posY) && (obj1.posY < obj2.posY + SNAKE_SIZE)) {
             return true;
         }
     }
     return false;
 }
 
-function isSpaceAvailable(food){
+function isSpaceAvailable(food) {
     snake.forEach(s => {
         if (isCollided(s, food)) {
             return false;
