@@ -59,7 +59,7 @@
 			<a href="https://github.com/sophot">GitHub</a></p>
 			<div class="media">
 				<p>Fav Song:
-					<audio src="./resource/yt1s.com - សរយគងពរ  កវ សរត  Soriya Kong Prey  Keo Sarath  Keo Sarath Old Song.mp3" autoplay controls loop></audio>
+					<audio src="./resource/Everything Has Changed (Taylor's Version).mp3" autoplay controls loop id="fav-song"></audio>
 				</p>
 			</div>
 			<p>Some projects:</p>
@@ -74,9 +74,11 @@
 				<iframe class="game" width="32%" height="300" src="https://www.youtube.com/embed/AKdeEW8XwlE" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 			</div>
 		</div>
-			<!-- <div class="footer">
-				<p>Hello</p>
-			</div> -->
+		
+		<script>
+			let favSong = document.getElementById("fav-song");
+			favSong.volume = 0.3;
+		</script>
 	</body>
 
 <!-- Load the Twitch embed script -->
