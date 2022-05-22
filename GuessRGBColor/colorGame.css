@@ -1,0 +1,75 @@
+body {
+  background-color: #232323;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+button {
+  border: none;
+  background: none;
+  color: #328fa8;
+  text-transform: uppercase;
+  font-size: inherit;
+  font-weight: 700;
+  height: 100%;
+  transition: all 0.4s; /*fade in/out*/
+}
+
+button:hover {
+  background-color: #328fa8;
+  color: white;
+}
+
+#colorDisplay {
+  text-transform: uppercase;
+  font-size: 2.5em;
+}
+
+#navBar {
+  height: 30px;
+  width: 100%;
+  text-align: center;
+  background-color: #e6f0e9;
+}
+
+#textDisplay {
+  width: 20%;
+  display: inline-block;
+}
+
+.headTitle {
+  background-color: #121212;
+}
+
+h1 {
+  margin: 0 auto;
+  color: white;
+  font-size: 2em;
+  text-align: center;
+  font-weight: lighter;
+  letter-spacing: 10px;
+  padding: 20px 0 20px 0;
+}
+
+.fadeout {
+  transition: visibility 0s 1s, opacity 1s linear;
+}
+
+.container {
+  margin: 5px auto;
+  max-width: 50%;
+}
+
+.square {
+  width: 30%;
+  margin: 1.66%;
+  padding-bottom: 30%;
+  background-color: black;
+  float: left;
+  border-radius: 50%;
+  transition: background 0.15s;
+}
+
+.selected {
+  background-color: burlywood;
+}
