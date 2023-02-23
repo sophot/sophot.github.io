@@ -40,11 +40,11 @@ let mergeSort = function(s){
         }
         while (i < left.length) {
             arr[k++] = left[i++];
-            await s.sleep(0); // for visualization purpose only
+            // await s.sleep(0); // for visualization purpose only
         }
         while (j < right.length) {
             arr[k++] = right[j++];
-            await s.sleep(0); // for visualization purpose only
+            // await s.sleep(0); // for visualization purpose only
         }
     }
 

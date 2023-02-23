@@ -34,10 +34,10 @@ let timSort = function(s){
             while (j >= start && arr[j] > key) {
                 arr[j + 1] = arr[j];
                 j--;
-                await s.sleep(0); // for visualization purpose only
+                // await s.sleep(0); // for visualization purpose only
             }
             arr[j + 1] = key;
-            await s.sleep(0); // for visualization purpose only
+            // await s.sleep(0); // for visualization purpose only
             }
         }
     
@@ -57,11 +57,11 @@ let timSort = function(s){
             }
             while (i < left.length) {
             arr[k++] = left[i++];
-            await s.sleep(0); // for visualization purpose only
+            // await s.sleep(0); // for visualization purpose only
             }
             while (j < right.length) {
             arr[k++] = right[j++];
-            await s.sleep(0); // for visualization purpose only
+            // await s.sleep(0); // for visualization purpose only
             }
         }
     
