@@ -47,21 +47,24 @@ let timSort = function(s){
             let i = 0,
             j = 0,
             k = start;
+
             while (i < left.length && j < right.length) {
-            if (left[i] < right[j]) {
-                arr[k++] = left[i++];
-            } else {
-                arr[k++] = right[j++];
+                if (left[i] < right[j]) {
+                    arr[k++] = left[i++];
+                } else {
+                    arr[k++] = right[j++];
+                }
+                await s.sleep(0); // for visualization purpose only
             }
-            await s.sleep(0); // for visualization purpose only
-            }
+
             while (i < left.length) {
-            arr[k++] = left[i++];
-            // await s.sleep(0); // for visualization purpose only
+                arr[k++] = left[i++];
+                await s.sleep(0); // for visualization purpose only
             }
+
             while (j < right.length) {
-            arr[k++] = right[j++];
-            // await s.sleep(0); // for visualization purpose only
+                arr[k++] = right[j++];
+                await s.sleep(0); // for visualization purpose only
             }
         }
     
@@ -74,9 +77,10 @@ let timSort = function(s){
         
         for (let size = minRun; size < n; size *= 2) {
             for (let left = 0; left < n; left += 2 * size) {
-            let mid = left + size - 1;
-            let right = s.min(left + 2 * size - 1, n - 1);
-            await s.merge(left, mid, right);
+                let mid = left + size - 1;
+                let right = s.min(left + 2 * size - 1, n - 1);
+                await s.sleep(0);
+                await s.merge(left, mid, right);
             }
         }
     }

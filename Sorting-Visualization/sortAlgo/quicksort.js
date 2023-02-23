@@ -42,12 +42,15 @@ let quickSort = function (s) {
     while (i <= j) {
       while (items[i] < pivot) {
         i++;
+        await s.sleep(0);
       }
       while (items[j] > pivot) {
         j--;
+        await s.sleep(0);
       }
       if (i <= j) {
         await s.swap(items, i, j); //swap two elements
+        await s.sleep(0);
         i++;
         j--;
       }
@@ -56,7 +59,6 @@ let quickSort = function (s) {
   };
 
   s.swap = async function (value, a, b) {
-    await s.sleep(0);
     let tmp = value[a];
     value[a] = value[b];
     value[b] = tmp;
