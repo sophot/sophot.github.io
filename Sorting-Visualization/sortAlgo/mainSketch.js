@@ -9,6 +9,8 @@ let bubble = new p5(bubbleSort, "bubble-sort");
 let selection = new p5(selectionSort, "selection-sort");
 let insertion = new p5(insertionSort, "insertion-sort");
 let quick = new p5(quickSort, "quick-sort");
+let merge = new p5(mergeSort, "merge-sort")
+let tim = new p5(timSort, "tim-sort")
 
 function newBubble() {
   q = document.querySelector("#bubble-sort");
@@ -30,8 +32,21 @@ function newQuick() {
   q.removeChild(q.childNodes[0]);
   quick = new p5(quickSort, "quick-sort");
 }
+function newMerge() {
+  q = document.querySelector("#merge-sort");
+  q.removeChild(q.childNodes[0]);
+  quick = new p5(mergeSort, "merge-sort");
+}
+function newTim() {
+  q = document.querySelector("#tim-sort");
+  q.removeChild(q.childNodes[0]);
+  quick = new p5(timSort, "tim-sort");
+}
+
 
 document.querySelector("#bubbleBtn").addEventListener("click", newBubble);
 document.querySelector("#selectionBtn").addEventListener("click", newSelection);
 document.querySelector("#insertionBtn").addEventListener("click", newInsertion);
 document.querySelector("#quickBtn").addEventListener("click", newQuick);
+document.querySelector("#mergeBtn").addEventListener("click", newMerge);
+document.querySelector("#timBtn").addEventListener("click", newTim);

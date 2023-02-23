@@ -11,7 +11,6 @@ let quickSort = function (s) {
       s.value.push(s.randHeight);
     }
     s.quicksort(s.value, 0, s.value.length - 1);
-    console.log(s.value);
   };
 
   s.draw = function () {
