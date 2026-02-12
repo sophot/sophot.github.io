@@ -1,31 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>No Stress, Just Vibing - Voxel Art</title>
     <style>
-        body { margin: 0; overflow: hidden; background-color: #bfaea0; font-family: sans-serif; }
-        #canvas-container { width: 100vw; height: 100vh; }
-        #loading {
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            color: white; font-size: 24px; font-weight: bold; pointer-events: none;
-            text-shadow: 2px 2px 0px #000;
-        }
+      body {
+        margin: 0;
+        overflow: hidden;
+        background-color: #212121;
+        font-family: sans-serif;
+      }
+      #canvas-container {
+        width: 100vw;
+        height: 100vh;
+      }
+      #loading {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+        pointer-events: none;
+        text-shadow: 2px 2px 0px #000;
+      }
     </style>
     <!-- Import Map for Three.js modules -->
     <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-            }
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
         }
+      }
     </script>
 
     <style>
       /* Hides common overlay IDs and classes used in Three.js examples and generated code */
-      #info, #loading, #ui, #instructions, .label, .overlay, #description {
+      #info,
+      #loading,
+      #ui,
+      #instructions,
+      .label,
+      .overlay,
+      #description {
         display: none !important;
         opacity: 0 !important;
         pointer-events: none !important;
@@ -37,282 +57,298 @@
       }
     </style>
   </head>
-<body>
+  <body>
     <div id="loading">Loading Vibe...</div>
     <div id="canvas-container"></div>
 
     <script type="module">
-        import * as THREE from 'three';
-        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-        import { FontLoader } from 'three/addons/loaders/FontLoader.js';
-        import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+      import * as THREE from "three";
+      import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+      import { FontLoader } from "three/addons/loaders/FontLoader.js";
+      import { TextGeometry } from "three/addons/geometries/TextGeometry.js";
 
-        // --- Configuration ---
-        const VOXEL_SIZE = 1;
-        const PALETTE = {
-            white: 0xffffff,
-            grey: 0x5e6b75,
-            orange: 0xd99058,
-            black: 0x111111,
-            pink: 0xffaabb,
-            bg: 0xbaa896 
-        };
+      // --- Configuration ---
+      const VOXEL_SIZE = 1;
+      const PALETTE = {
+        white: 0xffffff,
+        grey: 0x5e6b75,
+        orange: 0xd99058,
+        black: 0x111111,
+        pink: 0xffaabb,
+        bg: 0x212121,
+      };
 
-        // --- Scene Setup ---
-        const container = document.getElementById('canvas-container');
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(PALETTE.bg);
-        // Add some fog for depth matching the soft photo background
-        scene.fog = new THREE.Fog(PALETTE.bg, 20, 70);
+      // --- Scene Setup ---
+      const container = document.getElementById("canvas-container");
+      const scene = new THREE.Scene();
+      scene.background = new THREE.Color(PALETTE.bg);
+      // Add some fog for depth matching the soft photo background
+      scene.fog = new THREE.Fog(PALETTE.bg, 20, 70);
 
-        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.set(0, 8, 32);
+      const camera = new THREE.PerspectiveCamera(
+        45,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000,
+      );
+      camera.position.set(0, 12, 50);
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
+      const renderer = new THREE.WebGLRenderer({ antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.SoftShadowMap;
+      container.appendChild(renderer.domElement);
+
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.target.set(0, 12, 0);
+      controls.enableDamping = true;
+      controls.minDistance = 10;
+      controls.maxDistance = 100;
+
+      // --- Lighting ---
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+      scene.add(ambientLight);
+
+      const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+      dirLight.position.set(10, 20, 10);
+      dirLight.castShadow = true;
+      dirLight.shadow.mapSize.width = 2048;
+      dirLight.shadow.mapSize.height = 2048;
+      scene.add(dirLight);
+
+      const backLight = new THREE.DirectionalLight(0xffeedd, 0.5);
+      backLight.position.set(-10, 10, -10);
+      scene.add(backLight);
+
+      // --- Geometry & Material Reusability ---
+      const boxGeometry = new THREE.BoxGeometry(
+        VOXEL_SIZE,
+        VOXEL_SIZE,
+        VOXEL_SIZE,
+      );
+
+      // Materials
+      const matWhite = new THREE.MeshStandardMaterial({ color: PALETTE.white });
+      const matGrey = new THREE.MeshStandardMaterial({ color: PALETTE.grey });
+      const matOrange = new THREE.MeshStandardMaterial({
+        color: PALETTE.orange,
+      });
+      const matPink = new THREE.MeshStandardMaterial({ color: PALETTE.pink });
+      const matBlack = new THREE.MeshStandardMaterial({
+        color: PALETTE.black,
+        roughness: 0.2,
+        metalness: 0.8, // Shiny glasses
+      });
+
+      // Group to hold the cat so we can animate the whole thing
+      const catGroup = new THREE.Group();
+      scene.add(catGroup);
+
+      // Helper to place voxel
+      function createVoxel(x, y, z, material, parent = catGroup) {
+        const mesh = new THREE.Mesh(boxGeometry, material);
+        mesh.position.set(x * VOXEL_SIZE, y * VOXEL_SIZE, z * VOXEL_SIZE);
+        mesh.castShadow = true;
+        mesh.receiveShadow = true;
+        parent.add(mesh);
+        return mesh;
+      }
+
+      // --- Build The Cat ---
+      function buildCat() {
+        // 1. Body (Sitting pose - slightly conical/pyramid shape)
+        const bodyWidth = 8;
+        const bodyHeight = 9;
+        const bodyDepth = 6;
+
+        for (let y = 0; y < bodyHeight; y++) {
+          // Taper the body slightly as it goes up
+          let taper = Math.floor(y / 4);
+          for (let x = -bodyWidth / 2 + taper; x < bodyWidth / 2 - taper; x++) {
+            for (let z = -bodyDepth / 2; z < bodyDepth / 2; z++) {
+              // Calico Logic: Mostly white, random patches of orange and grey
+              let mat = matWhite;
+              const rand = Math.random();
+              // Noise function based on position for cohesive patches
+              const noise =
+                Math.sin(x * 0.5) * Math.cos(z * 0.5) * Math.sin(y * 0.8);
+
+              if (y > 1 && noise > 0.4) mat = matOrange;
+              else if (y > 1 && noise < -0.5) mat = matGrey;
+
+              // Chest is always white
+              if (z > 1 && y < 6 && Math.abs(x) < 2) mat = matWhite;
+
+              createVoxel(x, y, z, mat);
+            }
+          }
+        }
+
+        // 2. Head
+        const headY = bodyHeight;
+        const headSize = 7;
+
+        for (let y = 0; y < 6; y++) {
+          for (let x = -3; x <= 3; x++) {
+            for (let z = -2; z <= 3; z++) {
+              // Round the head corners
+              if (Math.abs(x) === 3 && Math.abs(z) === 3) continue;
+              if (Math.abs(x) === 3 && y === 5) continue; // Round top
+
+              let mat = matWhite;
+              // Calico patches on head (ears/forehead)
+              if (y > 2) {
+                if (x < -1) mat = matGrey;
+                if (x > 1) mat = matOrange;
+              }
+
+              createVoxel(x, headY + y, z, mat);
+            }
+          }
+        }
+
+        // 3. Ears
+        const earY = headY + 6;
+        // Left Ear (Grey)
+        createVoxel(-2, earY, 0, matGrey);
+        createVoxel(-3, earY, 0, matGrey);
+        createVoxel(-2, earY + 1, 0, matGrey);
+
+        // Right Ear (Orange)
+        createVoxel(2, earY, 0, matOrange);
+        createVoxel(3, earY, 0, matOrange);
+        createVoxel(2, earY + 1, 0, matOrange);
+
+        // 4. Face Details
+        // Nose
+        createVoxel(0, headY + 1, 4, matPink);
+
+        // Cheeks/Muzzle puff
+        createVoxel(-1, headY + 1, 4, matWhite);
+        createVoxel(1, headY + 1, 4, matWhite);
+        createVoxel(0, headY, 4, matWhite);
+
+        // 5. SUNGLASSES (The Vibe)
+        const glassesY = headY + 2;
+        const glassesZ = 4;
+
+        // Left Lens
+        createVoxel(-2, glassesY, glassesZ, matBlack);
+        createVoxel(-1, glassesY, glassesZ, matBlack);
+        createVoxel(-2, glassesY + 1, glassesZ, matBlack);
+        createVoxel(-1, glassesY + 1, glassesZ, matBlack);
+
+        // Right Lens
+        createVoxel(1, glassesY, glassesZ, matBlack);
+        createVoxel(2, glassesY, glassesZ, matBlack);
+        createVoxel(1, glassesY + 1, glassesZ, matBlack);
+        createVoxel(2, glassesY + 1, glassesZ, matBlack);
+
+        // Bridge
+        createVoxel(0, glassesY + 1, glassesZ, matBlack);
+
+        // Arms of glasses
+        createVoxel(-3, glassesY + 1, 3, matBlack);
+        createVoxel(3, glassesY + 1, 3, matBlack);
+      }
+
+      buildCat();
+
+      // --- Text Generation ---
+      const loader = new FontLoader();
+      let textGroup = new THREE.Group();
+      scene.add(textGroup);
+
+      loader.load(
+        "https://unpkg.com/three@0.160.0/examples/fonts/helvetiker_bold.typeface.json",
+        function (font) {
+          const textMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
+          const textOptions = {
+            font: font,
+            size: 3.5,
+            height: 0.5, // Thickness
+            curveSegments: 4,
+            bevelEnabled: true,
+            bevelThickness: 0.1,
+            bevelSize: 0.05,
+            bevelSegments: 3,
+          };
+
+          // Top Text: "NO STRESS"
+          const geoTop = new TextGeometry("NO STRESS", textOptions);
+          geoTop.computeBoundingBox();
+          const centerOffsetTop =
+            -0.5 * (geoTop.boundingBox.max.x - geoTop.boundingBox.min.x);
+          const meshTop = new THREE.Mesh(geoTop, textMat);
+          meshTop.position.set(centerOffsetTop, 19, 0);
+          meshTop.castShadow = true;
+          textGroup.add(meshTop);
+
+          // Bottom Text: "JUST VIBING"
+          const geoBot = new TextGeometry("JUST VIBING", textOptions);
+          geoBot.computeBoundingBox();
+          const centerOffsetBot =
+            -0.5 * (geoBot.boundingBox.max.x - geoBot.boundingBox.min.x);
+          const meshBot = new THREE.Mesh(geoBot, textMat);
+          meshBot.position.set(centerOffsetBot, -2, 4); // Placed in front
+          meshBot.castShadow = true;
+          textGroup.add(meshBot);
+
+          document.getElementById("loading").style.display = "none";
+        },
+      );
+
+      // --- Environment ---
+      // Simple shadow plane
+      const planeGeo = new THREE.PlaneGeometry(200, 200);
+      const planeMat = new THREE.ShadowMaterial({ opacity: 0.2 });
+      const plane = new THREE.Mesh(planeGeo, planeMat);
+      plane.rotation.x = -Math.PI / 2;
+      plane.position.y = -0.5;
+      plane.receiveShadow = true;
+      scene.add(plane);
+
+      // --- Animation Loop ---
+      const clock = new THREE.Clock();
+
+      function animate() {
+        requestAnimationFrame(animate);
+        const time = clock.getElapsedTime();
+
+        // 1. Head bobbing (Vibing to music)
+        // We move the whole cat group up and down
+        const beat = Math.sin(time * 8); // Fast beat
+
+        // Bobbing body
+        catGroup.position.y = Math.abs(beat) * 0.3;
+
+        // Rotate head slightly for "groove"
+        catGroup.rotation.z = Math.sin(time * 4) * 0.05;
+        catGroup.rotation.y = Math.cos(time * 2) * 0.1;
+
+        // 2. Floating Text animation
+        if (textGroup) {
+          // Top text floats slowly
+          const topText = textGroup.children[0];
+          if (topText) topText.position.y = 19 + Math.sin(time * 2) * 0.5;
+
+          // Bottom text floats slowly opposite
+          const botText = textGroup.children[1];
+          if (botText) botText.position.y = -2 + Math.cos(time * 2) * 0.5;
+        }
+
+        controls.update();
+        renderer.render(scene, camera);
+      }
+
+      // --- Resize Handler ---
+      window.addEventListener("resize", () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.shadowMap.enabled = true;
-        renderer.shadowMap.type = THREE.SoftShadowMap;
-        container.appendChild(renderer.domElement);
+      });
 
-        const controls = new OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true;
-        controls.minDistance = 10;
-        controls.maxDistance = 100;
-
-        // --- Lighting ---
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
-        scene.add(ambientLight);
-
-        const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
-        dirLight.position.set(10, 20, 10);
-        dirLight.castShadow = true;
-        dirLight.shadow.mapSize.width = 2048;
-        dirLight.shadow.mapSize.height = 2048;
-        scene.add(dirLight);
-
-        const backLight = new THREE.DirectionalLight(0xffeedd, 0.5);
-        backLight.position.set(-10, 10, -10);
-        scene.add(backLight);
-
-        // --- Geometry & Material Reusability ---
-        const boxGeometry = new THREE.BoxGeometry(VOXEL_SIZE, VOXEL_SIZE, VOXEL_SIZE);
-        
-        // Materials
-        const matWhite = new THREE.MeshStandardMaterial({ color: PALETTE.white });
-        const matGrey = new THREE.MeshStandardMaterial({ color: PALETTE.grey });
-        const matOrange = new THREE.MeshStandardMaterial({ color: PALETTE.orange });
-        const matPink = new THREE.MeshStandardMaterial({ color: PALETTE.pink });
-        const matBlack = new THREE.MeshStandardMaterial({ 
-            color: PALETTE.black, 
-            roughness: 0.2, 
-            metalness: 0.8 // Shiny glasses
-        });
-
-        // Group to hold the cat so we can animate the whole thing
-        const catGroup = new THREE.Group();
-        scene.add(catGroup);
-
-        // Helper to place voxel
-        function createVoxel(x, y, z, material, parent = catGroup) {
-            const mesh = new THREE.Mesh(boxGeometry, material);
-            mesh.position.set(x * VOXEL_SIZE, y * VOXEL_SIZE, z * VOXEL_SIZE);
-            mesh.castShadow = true;
-            mesh.receiveShadow = true;
-            parent.add(mesh);
-            return mesh;
-        }
-
-        // --- Build The Cat ---
-        function buildCat() {
-            // 1. Body (Sitting pose - slightly conical/pyramid shape)
-            const bodyWidth = 8;
-            const bodyHeight = 9;
-            const bodyDepth = 6;
-
-            for (let y = 0; y < bodyHeight; y++) {
-                // Taper the body slightly as it goes up
-                let taper = Math.floor(y / 4);
-                for (let x = -bodyWidth/2 + taper; x < bodyWidth/2 - taper; x++) {
-                    for (let z = -bodyDepth/2; z < bodyDepth/2; z++) {
-                        // Calico Logic: Mostly white, random patches of orange and grey
-                        let mat = matWhite;
-                        const rand = Math.random();
-                        // Noise function based on position for cohesive patches
-                        const noise = Math.sin(x*0.5) * Math.cos(z*0.5) * Math.sin(y*0.8);
-                        
-                        if (y > 1 && noise > 0.4) mat = matOrange;
-                        else if (y > 1 && noise < -0.5) mat = matGrey;
-                        
-                        // Chest is always white
-                        if (z > 1 && y < 6 && Math.abs(x) < 2) mat = matWhite;
-
-                        createVoxel(x, y, z, mat);
-                    }
-                }
-            }
-
-            // 2. Head
-            const headY = bodyHeight;
-            const headSize = 7;
-            
-            for (let y = 0; y < 6; y++) {
-                for (let x = -3; x <= 3; x++) {
-                    for (let z = -2; z <= 3; z++) {
-                        // Round the head corners
-                        if (Math.abs(x) === 3 && Math.abs(z) === 3) continue;
-                        if (Math.abs(x) === 3 && y === 5) continue; // Round top
-
-                        let mat = matWhite;
-                        // Calico patches on head (ears/forehead)
-                        if (y > 2) {
-                            if (x < -1) mat = matGrey;
-                            if (x > 1) mat = matOrange;
-                        }
-
-                        createVoxel(x, headY + y, z, mat);
-                    }
-                }
-            }
-
-            // 3. Ears
-            const earY = headY + 6;
-            // Left Ear (Grey)
-            createVoxel(-2, earY, 0, matGrey);
-            createVoxel(-3, earY, 0, matGrey);
-            createVoxel(-2, earY + 1, 0, matGrey);
-            
-            // Right Ear (Orange)
-            createVoxel(2, earY, 0, matOrange);
-            createVoxel(3, earY, 0, matOrange);
-            createVoxel(2, earY + 1, 0, matOrange);
-
-            // 4. Face Details
-            // Nose
-            createVoxel(0, headY + 1, 4, matPink);
-            
-            // Cheeks/Muzzle puff
-            createVoxel(-1, headY + 1, 4, matWhite);
-            createVoxel(1, headY + 1, 4, matWhite);
-            createVoxel(0, headY, 4, matWhite);
-
-            // 5. SUNGLASSES (The Vibe)
-            const glassesY = headY + 2;
-            const glassesZ = 4;
-            
-            // Left Lens
-            createVoxel(-2, glassesY, glassesZ, matBlack);
-            createVoxel(-1, glassesY, glassesZ, matBlack);
-            createVoxel(-2, glassesY + 1, glassesZ, matBlack);
-            createVoxel(-1, glassesY + 1, glassesZ, matBlack);
-            
-            // Right Lens
-            createVoxel(1, glassesY, glassesZ, matBlack);
-            createVoxel(2, glassesY, glassesZ, matBlack);
-            createVoxel(1, glassesY + 1, glassesZ, matBlack);
-            createVoxel(2, glassesY + 1, glassesZ, matBlack);
-
-            // Bridge
-            createVoxel(0, glassesY + 1, glassesZ, matBlack);
-
-            // Arms of glasses
-            createVoxel(-3, glassesY + 1, 3, matBlack);
-            createVoxel(3, glassesY + 1, 3, matBlack);
-        }
-
-        buildCat();
-
-        // --- Text Generation ---
-        const loader = new FontLoader();
-        let textGroup = new THREE.Group();
-        scene.add(textGroup);
-
-        loader.load('https://unpkg.com/three@0.160.0/examples/fonts/helvetiker_bold.typeface.json', function (font) {
-            
-            const textMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
-            const textOptions = {
-                font: font,
-                size: 3.5,
-                height: 0.5, // Thickness
-                curveSegments: 4,
-                bevelEnabled: true,
-                bevelThickness: 0.1,
-                bevelSize: 0.05,
-                bevelSegments: 3
-            };
-
-            // Top Text: "NO STRESS"
-            const geoTop = new TextGeometry('NO STRESS', textOptions);
-            geoTop.computeBoundingBox();
-            const centerOffsetTop = - 0.5 * (geoTop.boundingBox.max.x - geoTop.boundingBox.min.x);
-            const meshTop = new THREE.Mesh(geoTop, textMat);
-            meshTop.position.set(centerOffsetTop, 19, 0);
-            meshTop.castShadow = true;
-            textGroup.add(meshTop);
-
-            // Bottom Text: "JUST VIBING"
-            const geoBot = new TextGeometry('JUST VIBING', textOptions);
-            geoBot.computeBoundingBox();
-            const centerOffsetBot = - 0.5 * (geoBot.boundingBox.max.x - geoBot.boundingBox.min.x);
-            const meshBot = new THREE.Mesh(geoBot, textMat);
-            meshBot.position.set(centerOffsetBot, -2, 4); // Placed in front
-            meshBot.castShadow = true;
-            textGroup.add(meshBot);
-
-            document.getElementById('loading').style.display = 'none';
-        });
-
-        // --- Environment ---
-        // Simple shadow plane
-        const planeGeo = new THREE.PlaneGeometry(200, 200);
-        const planeMat = new THREE.ShadowMaterial({ opacity: 0.2 });
-        const plane = new THREE.Mesh(planeGeo, planeMat);
-        plane.rotation.x = -Math.PI / 2;
-        plane.position.y = -0.5;
-        plane.receiveShadow = true;
-        scene.add(plane);
-
-
-        // --- Animation Loop ---
-        const clock = new THREE.Clock();
-
-        function animate() {
-            requestAnimationFrame(animate);
-            const time = clock.getElapsedTime();
-
-            // 1. Head bobbing (Vibing to music)
-            // We move the whole cat group up and down
-            const beat = Math.sin(time * 8); // Fast beat
-            
-            // Bobbing body
-            catGroup.position.y = Math.abs(beat) * 0.3; 
-            
-            // Rotate head slightly for "groove"
-            catGroup.rotation.z = Math.sin(time * 4) * 0.05;
-            catGroup.rotation.y = Math.cos(time * 2) * 0.1;
-
-            // 2. Floating Text animation
-            if (textGroup) {
-                // Top text floats slowly
-                const topText = textGroup.children[0];
-                if(topText) topText.position.y = 19 + Math.sin(time * 2) * 0.5;
-
-                // Bottom text floats slowly opposite
-                const botText = textGroup.children[1];
-                if(botText) botText.position.y = -2 + Math.cos(time * 2) * 0.5;
-            }
-
-            controls.update();
-            renderer.render(scene, camera);
-        }
-
-        // --- Resize Handler ---
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-        animate();
+      animate();
     </script>
-</body>
+  </body>
 </html>
